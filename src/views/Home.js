@@ -38,41 +38,26 @@ export default class Home extends Component {
 
   render() {
 
-    const {isShown} = this.state;
+    const {isShown, email, pass} = this.state;
 
 
     return (
-      <div onClick={() => this.setState({isShown: !this.state.isShown})} style={styles.mainContainer}>
+      <div onClick={() => this.setState({isShown: !this.state.isShown})} className="container main">
 
-            <header className="header">
-
-                <form className='form' onSubmit={this.onLoginPress}>
-
-                    <div className="two-text-inputs">
-                        
-                        <div className="input-container email">
-                            <input className="input" type="text" placeholder={'Email'} value={this.state.email} onChange={this.handleEmailChange} />
-                        </div>
-
-                        <div className="input-container pass">
-                            <input className="input" type="password" placeholder={'Password'} value={this.state.pass} onChange={this.handlePassChange} />
-                        </div>
-                        
-                    </div>
-
-
-                    <div className="button submit">
-                        <input type="submit" value="Login" />
-                    </div>
-                    
+        <header className="container header">
+            <div className="first"></div>
+            <div className="second">
+                <form className="container form" onSubmit={this.onLoginPress}>
+                    <input className='input' type='email' value={email} onChange={(event) => this.setState({email: event.target.value})}/>
+                    <input className='input' type='password' value={pass} onChange={(event) => this.setState({pass: event.target.value})}/>
+                    <input type='submit' value='Log In'/>
                 </form>
+            </div>
+        </header>
 
-            </header>
+        <body className='container body'>
 
-            <body className="body">
-                
-            </body>
-        
+        </body>
             
         
       </div>
