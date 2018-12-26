@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { reactBlack } from '../designUtilities/colors';
+import { reactBlack } from '../../designUtilities/colors';
 import './Home.css';
+import logo from '../../logo.svg'
 
 const {innerHeight} = window;
 
@@ -45,18 +46,20 @@ export default class Home extends Component {
       <div onClick={() => this.setState({isShown: !this.state.isShown})} className="container main">
 
         <header className="container header">
-            <div className="first"></div>
+            <div className="first">
+               <h1 className="h1">OneStopMall.pk</h1>
+            </div>
             <div className="second">
                 <form className="container form" onSubmit={this.onLoginPress}>
                     <input className='input' type='email' value={email} onChange={(event) => this.setState({email: event.target.value})}/>
                     <input className='input' type='password' value={pass} onChange={(event) => this.setState({pass: event.target.value})}/>
-                    <input type='submit' value='Log In'/>
+                    <input className="button submit" type='submit' value='Log In'/>
                 </form>
             </div>
         </header>
 
         <body className='container body'>
-
+            <img src={logo} className="App-logo" alt="logo" />
         </body>
             
         
