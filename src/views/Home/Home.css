@@ -33,7 +33,7 @@
     /* background-color: antiquewhite */
 }
 
-.form {
+.credentials-form {
     /* flex: 0.5; */
     border: 1px dotted #999;
     height: 120px;
@@ -43,13 +43,13 @@
     /* background-color: red; */
 }
 
-.form > * { 
+.credentials-form > * { 
     /* TODO: Direct descendant selector lets one control spacing between child elements */
     /* padding: 0 20px 0 20px; */
     /* margin: 0 20px 0 20px; */
 }
 
-.input {
+.credential-input {
     font-family: 'Avenir Next';
     font-size: 20px;
     text-align: center;
@@ -63,15 +63,12 @@
     height: 40px;
 }
 
-.button {
+.submit {
     border: 1px solid blue;
     border-radius: 5px;
     font-family: 'Avenir Next';
     height: 30px;
     width: 60px;
-}
-
-.submit {
     background-color: green
 }
 

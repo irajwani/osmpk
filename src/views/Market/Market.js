@@ -42,9 +42,9 @@ export default class Market extends Component {
 
                     
 
-                    <form className="container form fbcc" onSubmit={this.performSearch}>
-                        <input class="textbox" type="text" placeholder="Search" value={this.state.searchTerm} onChange={(event)=>this.setState({searchTerm: event.target.value })}/>
-                        <input class="button" title="Search"  value="" type="submit" />
+                    <form className="container search-form fbcc" onSubmit={this.performSearch}>
+                        <input class="search-input" type="text" placeholder="Search" value={this.state.searchTerm} onChange={(event)=>this.setState({searchTerm: event.target.value })}/>
+                        <input class="search-button" title="Search"  value="" type="submit" />
                     </form>
                         
                     

@@ -3,6 +3,7 @@ import { reactBlack } from '../../designUtilities/colors';
 import './Home.css';
 import logo from '../../logo.svg'
 import firebase from '../../cloud/firebase';
+import Modal from '../../visualComponents/Modal';
 
 const {innerHeight} = window;
 
@@ -18,7 +19,10 @@ export default class Home extends Component {
             pass: '',
 
 
-            isShown: false
+            isShown: false,
+
+
+            signUpModalVisible: false,
         }
     }
 
@@ -89,25 +93,36 @@ export default class Home extends Component {
         }
     }
 
+    onSignUpPress = () => {
+        
+    }
+
+    toggleModal = () => {
+        this.setState({signUpModalVisible: !this.state.signUpModalVisible})
+    }
+
     
 
   render() {
 
-    const {isShown, email, pass} = this.state;
+    const {signUpModalVisible, isShown, email, pass} = this.state;
 
 
     return (
       <div onClick={() => this.setState({isShown: !this.state.isShown})} className="container main">
+
+        
 
         <header className="container header">
             <div className="first">
                <h1 className="h1">OneStopMall.pk</h1>
             </div>
             <div className="second">
-                <form className="container form" onSubmit={this.onSignInPress}>
-                    <input className='input' type='email' value={email} onChange={(event) => this.setState({email: event.target.value})}/>
-                    <input className='input' type='password' value={pass} onChange={(event) => this.setState({pass: event.target.value})}/>
-                    <input className="button submit" type='submit' value='Log In'/>
+                <form className="container credentials-form">
+                    <input className='credential-input' type='email' value={email} onChange={(event) => this.setState({email: event.target.value})}/>
+                    <input className='credential-input' type='password' value={pass} onChange={(event) => this.setState({pass: event.target.value})}/>
+                    <input className="submit" type='button' value='Log In' onClick={this.onSignInPress}/>
+                    <button onClick={() => this.setState({signUpModalVisible: true})} title="Sign Up"/>
                 </form>
             </div>
         </header>
