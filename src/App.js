@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import DivWithTable from './testReactBasics/DivWithTable';
-import Home from './views/Home/Home';
+// import logo from './logo.svg';
+// import './App.css';
+// import DivWithTable from './testReactBasics/DivWithTable';
+// import Home from './views/Home/Home';
 
 import RouteStack from './navigation/RouteStack';
 
 class App extends Component {
   render() {
     console.log('Initializing Application');
-    return (
+    return (  
       <RouteStack/>
     )
   }
@@ -27,7 +27,7 @@ class App extends Component {
 // }
 
 // class App extends Component {
-//   render() {
+//   render() { 
 //     return (
 //       <div style={styles.mainContainer}>
 //         <header style={styles.header}>

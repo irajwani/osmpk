@@ -5,19 +5,85 @@
 .main {
     /* flex: 1; */
     background-color: #fff;
-    height: 900px;
+    height: 1000px;
     flex-direction: column;
 }
 
+
+/* HEADER STYLES BEGIN HERE */
+
 .header {
-    flex: 0.15;
-    background-color: #282c34;
+    flex: 0.1;
+    background-color: aliceblue;
+    align-items: center;
+}
+
+    .drawer-icon-container {
+        flex: 0.1;
+        background-color: aquamarine;
+        font-size: 50px;
+        /* height: fit-content; */
+    }
+
+    .company-name-container {
+        flex: 0.25;
+    }
+
+    .h2 {
+        font-family: 'Avenir Next';
+        font-size: 30px;
+        font-weight: 200;
+        color: black
+        /* fill: #fff; */
+        /* background-color: #fff; */
+    }
+
+    .search {
+        flex: 0.25;
+    }
+
+        .search-bar {
+            
+        }
+
+    .account-info {
+        flex: 0.2;
+    }
+
+    .account-info > * {
+        margin: 0 5px 0 5px;
+    }
+
+        .account-text {
+            /* text-align: center; */
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 300;
+        }
+
+        .icon-account-picture {
+
+        }
+
+        
+
+    .cart-icon-container {
+        flex: 0.1;
+    }
+
+.icon {
+
+}
+    
+.p {
+    font-family: 'Avenir Next'
 }
 
 .body {
-    flex: 0.85;
+    flex: 0.9;
     justify-content: center;
     align-items: center;
+    /* height: 800px; */
 }
 
 .filter {
@@ -27,4 +93,99 @@
 
 .market {
     flex: 0.7;
+}
+
+
+/*  */
+/*  */
+/*  */
+
+.search-container {
+    flex: 0.25;
+    background: url('http://i.hizliresim.com/v4Qykv.png') no-repeat center center fixed;
+    background-color: green;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', Tahoma, Arial, sans-serif;
+    line-height: 1.5;
+    font-size: 13px;
+  }
+
+.form {
+    outline: 0;
+    flex: 0.25;
+    /* background-color: yellow; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* float: left; */
+    /* -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+    /* -webkit-border-radius: 4px; */
+    /* border-radius: 4px; */
+  }
+  
+  .form > .textbox {
+      /* To remove outline when input is selected, */
+    outline: 0; 
+    height: 42px;
+    width: 200px;
+    line-height: 42px;
+    padding: 0 16px;
+    /* background-color: green; */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #212121;
+    border: 0;
+    float: left;
+    -webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .form > .textbox:focus {
+    outline: 0;
+    background-color: #FFF;
+  }
+  
+  .form > .button {
+    outline: 0;
+    background: none;
+    background-color: rgba(38, 50, 56, 0.8);
+    float: left;
+    height: 42px;
+    width: 42px;
+    text-align: center;
+    line-height: 42px;
+    border: 0;
+    color: #FFF;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 16px;
+    text-rendering: auto;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition: background-color .4s ease;
+    transition: background-color .4s ease;
+    -webkit-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .form > .button:hover {
+    background-color: rgba(0, 150, 136, 0.8);
+  }
+
+  /* HEADER STYLES END HERE  */
+
+
+/*  */
+/*  */
+/*  */
+
+
+
+/*  */
+/*  */
+/*  */
+
+.fbcc {
+    justify-content: center;
+    align-items: center;
 }

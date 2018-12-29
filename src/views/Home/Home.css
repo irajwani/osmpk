@@ -4,14 +4,14 @@
 
 .main {
     /* flex: 1; */
-    background-color: #fff;
+    background-color: #282c34;
     height: 900px;
     flex-direction: column;
 }
 
 .header {
     flex: 0.15;
-    background-color: #282c34;
+    background-color: #fff;
 }
 
 .first {
@@ -23,7 +23,7 @@
     font-family: 'Avenir Next';
     font-size: 50px;
     font-weight: 200;
-    color: #fff
+    color: black
     /* fill: #fff; */
     /* background-color: #fff; */
 }
@@ -52,6 +52,7 @@
 .input {
     font-family: 'Avenir Next';
     font-size: 20px;
+    text-align: center;
     /* fill: aqua; */
     /* TODO: Figure our how to fill in text input */
     /* background-color: '#282c34'; */
@@ -63,7 +64,7 @@
 }
 
 .button {
-    border: 1px solid green;
+    border: 1px solid blue;
     border-radius: 5px;
     font-family: 'Avenir Next';
     height: 30px;

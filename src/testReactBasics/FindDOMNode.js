@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+// programaticaly find and change properties of DOM nodes
 class FindDOMNode extends React.Component {
    constructor() {
       super();
-      this.findDomNodeHandler = this.findDomNodeHandler.bind(this);
+      // this.findDomNodeHandler = this.findDomNodeHandler.bind(this);
    };
-   findDomNodeHandler() {
+   
+   findDomNodeHandler = () => {
       var myDiv = document.getElementById('myDiv');
       ReactDOM.findDOMNode(myDiv).style.color = 'green';
    }
