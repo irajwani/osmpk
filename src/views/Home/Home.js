@@ -140,28 +140,48 @@ export default class Home extends Component {
     handleAvatarChange = (e) => {
 
         if(e.target.files[0]) {
-            console.log( Object.keys(e.target), Object.keys(e.currentTarget) )
+            // console.log( e.target.files, Object.keys(e.target), Object.keys(e.currentTarget) )
+            // console.log()
             const image = e.target.value;
             // console.log(image, typeof image);
             this.setState(() => ({image}))
         }
     }
 
+    handleImageChosen = () => {
+        let fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.setState({uri: fileReader.result})
+        }
+        fileReader.readAsDataURL(this.state.image);
+
+        // fs.readFile
+    }
+
+    // handleLoadCompletion = (e) => {
+    //     console.log(fileReader.result)
+    //     // this.setState({uri: })
+    // }
+
     handleAvatarUpload = (uid) => {
         let imageRef = firebase.storage().ref().child(`Users/${uid}/profile`);
         // uploadTask.on('state_changed', progress, error, complete)
+        // console.log(this.state.image);
         const uploadTask = imageRef.put(this.state.image);
         uploadTask.on('state_changed', 
+        //progress
         (snapshot) => {
             console.log(snapshot)
         },
+        //error
         (error) => {
             console.log(error);
         },
+        //complete
         () => {
             imageRef.getDownloadURL()
             .then( url => {
-                updateFirebase(this.state, url, uid)
+                updateFirebase(this.state, url, uid);
             })    
             
         })
@@ -201,15 +221,26 @@ export default class Home extends Component {
                 <input className='credential-input' type="email" value={newEmail} onChange={(event) => this.setState({newEmail: event.target.value})}/>
                 <input className='credential-input' type="password" value={newPass} onChange={(event) => this.setState({newPass: event.target.value})}/>
                 <input className='credential-input' type="text" value={name} onChange={(event) => this.setState({name: event.target.value})}/>
-                <input type="file" className="avatar" accept="image/png, image/jpeg" onChange={this.handleAvatarChange}/>
+                <input 
+                name="avatar" type="file" className="avatar" accept="image/png, image/jpeg" 
+                onChange={(e) => {
+                    // console.log(e, e.target.files, e.target.files[0]);
+                    if(e.target.files[0]) {
+                        // console.log( e.target.files, Object.keys(e.target), Object.keys(e.currentTarget) )
+                        const image = e.target.files[0];
+                        // console.log(e.target,image, typeof image);
+                        this.setState(() => ({image}))
+                    }
+                }}
+                />
 
-                {uri ? <img src={uri} alt="avatar"/> : null}
-                {uri ? <button>Confirm</button> : null}
+                {this.state.image ? <input type='button' onClick={this.handleImageChosen} value='Confirm Image' /> : null}
+                {uri ? <img src={uri} alt="avatar" className="avatar-image"/> : null}
 
                 <input className="sign-up-button" type='button' value='Sign Up' onClick={this.createProfile}/>
                 <p>{name}</p>
             </form>
-            {/* <img src={logo} className="App-logo" alt="logo" /> */}
+            <img src={logo} className="App-logo" alt="logo" />
         </div>
             
         
