@@ -5,6 +5,7 @@ import logo from '../../logo.svg'
 import firebase from '../../cloud/firebase';
 import Modal from '../../visualComponents/Modal';
 import { updateFirebase } from './functions';
+// import {browserHistory} from 'react-router-dom'
 
 const {innerHeight} = window;
 
@@ -44,7 +45,8 @@ export default class Home extends Component {
     }
 
     successfulLoginCallback = (user) => {
-        
+        console.log('logged in')
+        this.props.history.push('/market')
     }
 
     onSignInPress = () => {
@@ -218,9 +220,13 @@ export default class Home extends Component {
             
             <form className="sign-up-form" onSubmit={this.handleSubmit}>
 
+                {/* textual information */}
+
                 <input className='credential-input' type="email" value={newEmail} onChange={(event) => this.setState({newEmail: event.target.value})}/>
                 <input className='credential-input' type="password" value={newPass} onChange={(event) => this.setState({newPass: event.target.value})}/>
                 <input className='credential-input' type="text" value={name} onChange={(event) => this.setState({name: event.target.value})}/>
+
+                {/* image upload stuff */}
                 <input 
                 name="avatar" type="file" className="avatar" accept="image/png, image/jpeg" 
                 onChange={(e) => {
@@ -233,9 +239,8 @@ export default class Home extends Component {
                     }
                 }}
                 />
-
                 {this.state.image ? <input type='button' onClick={this.handleImageChosen} value='Confirm Image' /> : null}
-                {uri ? <img src={uri} alt="avatar" className="avatar-image"/> : null}
+                <img src={uri ? uri : "https://via.placeholder.com/350x150"} alt="avatar" className="avatar-image"/>
 
                 <input className="sign-up-button" type='button' value='Sign Up' onClick={this.createProfile}/>
                 <p>{name}</p>

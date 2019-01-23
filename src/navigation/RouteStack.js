@@ -16,7 +16,7 @@ export default class RouteStack extends Component {
       <Router>
         <div>
           <Route exact path='/' component={Home} />
-          <Route path='/market' component={Market} />
+          <Route exact path='/market' component={Market} />
         </div>
       </Router>
     )
