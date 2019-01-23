@@ -4,6 +4,7 @@ import './Home.css';
 import logo from '../../logo.svg'
 import firebase from '../../cloud/firebase';
 import Modal from '../../visualComponents/Modal';
+import { updateFirebase } from './functions';
 
 const {innerHeight} = window;
 
@@ -18,7 +19,13 @@ export default class Home extends Component {
             email: '',
             pass: '',
 
-
+            //createProfile stuff
+            newEmail: '',
+            newPass: '',
+            name: '',
+            image: null,
+            uri: '',
+            //
             isShown: false,
 
 
@@ -93,19 +100,79 @@ export default class Home extends Component {
         }
     }
 
-    onSignUpPress = () => {
+    // onSignUpPress = () => {
+    //     const {email, pass} = this.state;
+    //     firebase.auth().createUserWithEmailAndPassword(email, pass)
         
+    // }
+
+    createProfile = () => {
+        const {newEmail, newPass, name, uri} = this.state;
+        this.setState({createProfileLoading: true});
+        firebase.auth().createUserWithEmailAndPassword(newEmail, newPass)
+          .then(() => {
+                          
+            var unsubscribe = firebase.auth().onAuthStateChanged( ( user ) => {
+                unsubscribe();
+                if(user) {
+                    const {uid} = user;
+                    // updateFirebase(this.state, uid);
+                    this.handleAvatarUpload(uid);
+                    // alert('Your account has been created.\nPlease use your credentials to Sign In.');
+                    // this.props.navigation.navigate('SignIn'); 
+                }
+                else {
+                alert('Oops, there was an error with account registration!');
+                }
+            })
+            }
+                )
+          .catch(() => {
+              this.setState({ error: 'You already have a NottMyStyle account. Please use your credentials to Sign In', createProfileLoading: false, email: '', pass: '', pass2: '' });
+              alert(this.state.error)
+          });
     }
 
     toggleModal = () => {
         this.setState({signUpModalVisible: !this.state.signUpModalVisible})
     }
 
+    handleAvatarChange = (e) => {
+
+        if(e.target.files[0]) {
+            console.log( Object.keys(e.target), Object.keys(e.currentTarget) )
+            const image = e.target.value;
+            // console.log(image, typeof image);
+            this.setState(() => ({image}))
+        }
+    }
+
+    handleAvatarUpload = (uid) => {
+        let imageRef = firebase.storage().ref().child(`Users/${uid}/profile`);
+        // uploadTask.on('state_changed', progress, error, complete)
+        const uploadTask = imageRef.put(this.state.image);
+        uploadTask.on('state_changed', 
+        (snapshot) => {
+            console.log(snapshot)
+        },
+        (error) => {
+            console.log(error);
+        },
+        () => {
+            imageRef.getDownloadURL()
+            .then( url => {
+                updateFirebase(this.state, url, uid)
+            })    
+            
+        })
+
+    }
+
     
 
   render() {
 
-    const {signUpModalVisible, isShown, email, pass} = this.state;
+    const {signUpModalVisible, isShown, email, pass, newEmail, newPass, name, uri} = this.state;
 
 
     return (
@@ -122,14 +189,28 @@ export default class Home extends Component {
                     <input className='credential-input' type='email' value={email} onChange={(event) => this.setState({email: event.target.value})}/>
                     <input className='credential-input' type='password' value={pass} onChange={(event) => this.setState({pass: event.target.value})}/>
                     <input className="submit" type='button' value='Log In' onClick={this.onSignInPress}/>
-                    <button onClick={() => this.setState({signUpModalVisible: true})} title="Sign Up"/>
+                    
                 </form>
             </div>
         </header>
 
-        <body className='container body'>
-            <img src={logo} className="App-logo" alt="logo" />
-        </body>
+        <div className='container body'>
+            
+            <form className="sign-up-form" onSubmit={this.handleSubmit}>
+
+                <input className='credential-input' type="email" value={newEmail} onChange={(event) => this.setState({newEmail: event.target.value})}/>
+                <input className='credential-input' type="password" value={newPass} onChange={(event) => this.setState({newPass: event.target.value})}/>
+                <input className='credential-input' type="text" value={name} onChange={(event) => this.setState({name: event.target.value})}/>
+                <input type="file" className="avatar" accept="image/png, image/jpeg" onChange={this.handleAvatarChange}/>
+
+                {uri ? <img src={uri} alt="avatar"/> : null}
+                {uri ? <button>Confirm</button> : null}
+
+                <input className="sign-up-button" type='button' value='Sign Up' onClick={this.createProfile}/>
+                <p>{name}</p>
+            </form>
+            {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        </div>
             
         
       </div>
