@@ -23,7 +23,8 @@ export default class Home extends Component {
             //createProfile stuff
             newEmail: '',
             newPass: '',
-            name: '',
+            firstName: '',
+            lastName: '',
             image: null,
             uri: '',
             //
@@ -45,8 +46,8 @@ export default class Home extends Component {
     }
 
     successfulLoginCallback = (user) => {
-        console.log('logged in')
-        this.props.history.push('/market')
+        console.log('logged in');
+        this.props.history.push('/market');
     }
 
     onSignInPress = () => {
@@ -109,7 +110,7 @@ export default class Home extends Component {
     // }
 
     createProfile = () => {
-        const {newEmail, newPass, name, uri} = this.state;
+        const {newEmail, newPass, firstName, lastName, uri} = this.state;
         this.setState({createProfileLoading: true});
         firebase.auth().createUserWithEmailAndPassword(newEmail, newPass)
           .then(() => {
@@ -143,11 +144,18 @@ export default class Home extends Component {
 
         if(e.target.files[0]) {
             // console.log( e.target.files, Object.keys(e.target), Object.keys(e.currentTarget) )
-            // console.log()
-            const image = e.target.value;
-            // console.log(image, typeof image);
+            const image = e.target.files[0];
+            // console.log(e.target,image, typeof image);
             this.setState(() => ({image}))
         }
+
+        // if(e.target.files[0]) {
+        //     // console.log( e.target.files, Object.keys(e.target), Object.keys(e.currentTarget) )
+        //     // console.log()
+        //     const image = e.target.value;
+        //     // console.log(image, typeof image);
+        //     this.setState(() => ({image}))
+        // }
     }
 
     handleImageChosen = () => {
@@ -183,7 +191,13 @@ export default class Home extends Component {
         () => {
             imageRef.getDownloadURL()
             .then( url => {
-                updateFirebase(this.state, url, uid);
+                firebase.auth().currentUser.updateProfile({
+                    displayName: this.state.firstName + " " + this.state.lastName,
+                    photoURL: url,
+                })
+                .then( () => updateFirebase(this.state, url, uid))
+                .catch(() => console.log('failed to update profile'))
+                
             })    
             
         })
@@ -194,7 +208,7 @@ export default class Home extends Component {
 
   render() {
 
-    const {signUpModalVisible, isShown, email, pass, newEmail, newPass, name, uri} = this.state;
+    const {signUpModalVisible, isShown, email, pass, newEmail, newPass, firstName, lastName, uri} = this.state;
 
 
     return (
@@ -224,27 +238,26 @@ export default class Home extends Component {
 
                 <input className='credential-input' type="email" value={newEmail} onChange={(event) => this.setState({newEmail: event.target.value})}/>
                 <input className='credential-input' type="password" value={newPass} onChange={(event) => this.setState({newPass: event.target.value})}/>
-                <input className='credential-input' type="text" value={name} onChange={(event) => this.setState({name: event.target.value})}/>
+                <input className='credential-input' type="text" value={firstName} onChange={(event) => this.setState({firstName: event.target.value})}/>
+                <input className='credential-input' type="text" value={lastName} onChange={(event) => this.setState({lastName: event.target.value})}/>
 
                 {/* image upload stuff */}
                 <input 
                 name="avatar" type="file" className="avatar" accept="image/png, image/jpeg" 
                 onChange={(e) => {
                     // console.log(e, e.target.files, e.target.files[0]);
-                    if(e.target.files[0]) {
-                        // console.log( e.target.files, Object.keys(e.target), Object.keys(e.currentTarget) )
-                        const image = e.target.files[0];
-                        // console.log(e.target,image, typeof image);
-                        this.setState(() => ({image}))
-                    }
+                    this.handleAvatarChange(e)
+                    
                 }}
                 />
                 {this.state.image ? <input type='button' onClick={this.handleImageChosen} value='Confirm Image' /> : null}
                 <img src={uri ? uri : "https://via.placeholder.com/350x150"} alt="avatar" className="avatar-image"/>
 
                 <input className="sign-up-button" type='button' value='Sign Up' onClick={this.createProfile}/>
-                <p>{name}</p>
+                <p>{firstName + " " + lastName}</p>
             </form>
+
+
             <img src={logo} className="App-logo" alt="logo" />
         </div>
             

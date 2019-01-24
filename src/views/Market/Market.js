@@ -3,17 +3,18 @@ import './Market.css'
 import '../../designUtilities/styles.css';
 import {Icon} from '../../visualComponents/Icons';
 // import DragHandle from '@material-ui/icons/DragHandle'
-
-
+import firebase from '../../cloud/firebase';
 
 
 export default class Market extends Component {
     constructor(props) {
         super(props);
+        // console.log(firebase.auth().currentUser)
+        
         this.state = {
-            loggedIn: false,
-            name: '',
-            uri: false,
+            uid: firebase.auth().currentUser ? firebase.auth().currentUser.uid : false,
+            name: firebase.auth().currentUser ? firebase.auth().currentUser.displayName : '',
+            uri:  firebase.auth().currentUser ? firebase.auth().currentUser.photoURL : '',
             // 
             // 
             // 
@@ -26,7 +27,7 @@ export default class Market extends Component {
     }
 
     render() {
-        const {loggedIn, name, uri} = this.state;
+        const {uid, name, uri} = this.state;
         return (
             <div className="container main">
 
@@ -49,8 +50,8 @@ export default class Market extends Component {
                         
                     
                     <div className="container account-info fbcc">
-                        <p className="p account-text">{loggedIn ? name : 'My Account'}</p>
-                        {loggedIn ?
+                        <p className="p account-text">{uid ? name : 'My Account'}</p>
+                        {uid ?
                             <img src={uri} className="account-picture" />
                         :
                             <Icon name='account-picture' size={24} color={'black'}/>
@@ -70,6 +71,10 @@ export default class Market extends Component {
 
                     <div className="container market">
 
+                        {/* upload new item */}
+                        <input type="button" value="Upload New Item" onClick={() => {
+                            this.props.history.push('/market/createItem');
+                        }}/>
                     </div>
                 </body>
             

@@ -6,7 +6,7 @@ const updateFirebase = (data, url, uid) => {
     var updateEmptyProducts = {};
 
     var postData = {
-        name: data.name,
+        name: data.firstName + " " + data.lastName,
         uri: url,
         // name: data.firstName + " " + data.lastName, //data.firstName.concat(" ", data.lastName)
         // country: data.country,
